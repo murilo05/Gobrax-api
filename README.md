@@ -45,7 +45,7 @@ $ Download: https://www.postgresql.org
 
 ## Inicio
 
-Abra o arquivo `.env-template`, utilize-o como referência para configurar as suas variaveis de ambiente em um arquivo `.env` definitivo.
+Abra o arquivo `.env`, utilize-o como referência para configurar as suas variaveis de ambiente.
 
 Caso opte por não utilizar o docker, será necessário fazer a instalação do postgresSQL localmente e rodar o script `docker_db_init` para fazer a criação das tabelas.
 
