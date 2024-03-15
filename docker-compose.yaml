@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  # Configuração do PostgreSQL
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker_db_init.sql:/docker-entrypoint-initdb.d/docker_db_init.sql
+
+  # Configuração da aplicação Go
+  go-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: go-app
+    environment:
+      - HOST=0.0.0.0 # Alteração para permitir que o aplicativo Go ouça em todas as interfaces
+      - PORT=8080
+      - DBHOST=postgres  # Alteração para o nome do serviço do contêiner PostgreSQL
+      - DBPORT=5432
+      - DBUSER=postgres
+      - DBPASSWORD=postgres
+      - DBNAME=postgres
+    ports:
+      - "${PORT}:${PORT}"
+    depends_on:
+      - postgres
+    links:
+      - "postgres:postgres"
